@@ -8,7 +8,7 @@ const AuthenticationStack = createStackNavigator();
 
 const AuthenticationNavigator = () => {
   return (
-    <AuthenticationStack.Navigator>
+    <AuthenticationStack.Navigator headerMode="none">
       <AuthenticationStack.Screen name="OnBoarding" component={OnBoarding} />
     </AuthenticationStack.Navigator>
   )
