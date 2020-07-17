@@ -2,9 +2,10 @@ import React from 'react';
 import {
     View,
     StyleSheet,
-    Text,
     Dimensions, Image
 } from 'react-native';
+
+import { Text } from '../../components/'
 
 interface SlideProps {
     title: string;
@@ -30,7 +31,7 @@ const Slide = ({ title, right, picture }: SlideProps) => {
                     <Image source={picture} style={styles.picture} />
                 </View>
                 <View style={[styles.titleContainer, { transform }]}>
-                    <Text style={styles.title}>{title}</Text>
+                    <Text variant='title1'>{title}</Text>
                 </View>
             </View>
         </>
@@ -45,13 +46,6 @@ const styles = StyleSheet.create({
         width: width,
         height: 100,
         justifyContent: 'center',
-    },
-    title: {
-        fontSize: 80,
-        lineHeight: 80,
-        fontFamily: 'SFProText-Bold',
-        color: 'white',
-        textAlign: 'center',
     },
     underlay: {
         ...StyleSheet.absoluteFillObject,
