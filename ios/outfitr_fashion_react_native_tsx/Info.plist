@@ -57,15 +57,7 @@
 	<array>
 		<string>SFProText-Bold.ttf</string>
 		<string>SFProText-Regular.ttf</string>
-		<string>SFProText-Semibold.ttf</string>
-		<string>Ubuntu-Bold.ttf</string>
-		<string>Ubuntu-BoldItalic.ttf</string>
-		<string>Ubuntu-Italic.ttf</string>
-		<string>Ubuntu-Light.ttf</string>
-		<string>Ubuntu-LightItalic.ttf</string>
-		<string>Ubuntu-Medium.ttf</string>
-		<string>Ubuntu-MediumItalic.ttf</string>
-		<string>Ubuntu-Regular.ttf</string>
+		<string>SFProText-Semibold.ttf</string>	
 	</array>
 </dict>
 </plist>
