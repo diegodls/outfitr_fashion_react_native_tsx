@@ -32,4 +32,4 @@ export default App;
 
 
 //parei 28:31
-https://www.youtube.com/watch?v=rJcJ7jzQO0g
+//https://www.youtube.com/watch?v=rJcJ7jzQO0g
