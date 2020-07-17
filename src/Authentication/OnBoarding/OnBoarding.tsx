@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
     View,
     StyleSheet,
@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 import { useValue, onScrollEvent, interpolateColor } from 'react-native-redash'
-import Animated from 'react-native-reanimated';
+import Animated, { multiply } from 'react-native-reanimated';
 
 
 import Slide, { SLIDE_HEIGHT } from './Slide';
@@ -45,6 +45,8 @@ const slides = [
 
 const OnBoarding = () => {
 
+    const scroll = useRef<Animated.ScrollView>(null);
+
     const x = useValue(0);
 
     const onScroll = onScrollEvent({ x });
@@ -59,6 +61,7 @@ const OnBoarding = () => {
             <View style={styles.container}>
                 <Animated.View style={[styles.slider, { backgroundColor }]}>
                     <Animated.ScrollView
+                        ref={scroll}
                         horizontal
                         snapToInterval={width}
                         decelerationRate={"fast"}
@@ -73,14 +76,25 @@ const OnBoarding = () => {
                 </Animated.View>
                 <View style={styles.footer}>
                     <Animated.View style={{ ...StyleSheet.absoluteFillObject, backgroundColor }} />
-                    <View style={styles.footerContent}>
+                    <Animated.View style={[styles.footerContent, {
+                        width: width * slides.length,
+                        flex: 1,
+                        transform: [
+                            { translateX: multiply(x, -1) },
+                        ]
+                    }]}>
                         {slides.map(({ subtitle, description }, index) => (
-                            <SubSlide 
-                            key={index} 
-                            last={index=== slides.length - 1} 
-                            {...{ subtitle, description, x }} />
+                            <SubSlide
+                                onPress={() => {
+                                    if (scroll.current) {
+                                        scroll.current.getNode().scrollTo({ x: width * (index + 1), animated: true })
+                                    }
+                                }}
+                                key={index}
+                                last={index === slides.length - 1}
+                                {...{ subtitle, description, x }} />
                         ))}
-                    </View>
+                    </Animated.View>
                 </View>
             </View>
         </>
@@ -101,6 +115,7 @@ const styles = StyleSheet.create({
     },
     footerContent: {
         flex: 1,
+        flexDirection: 'row',
         backgroundColor: 'white',
         borderTopLeftRadius: BORDER_RADIUS,
     },
