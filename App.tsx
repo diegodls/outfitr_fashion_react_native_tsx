@@ -5,7 +5,7 @@ import { ThemeProvider } from '@shopify/restyle';
 
 import OnBoarding from './src/Authentication/OnBoarding';
 import Welcome from './src/Authentication/Welcome';
-import theme from './src/components/index'
+import { theme } from './src/components'
 
 const AuthenticationStack = createStackNavigator();
 
@@ -30,6 +30,4 @@ const App = () => {
 
 export default App;
 
-
-//parei 28:31
-//https://www.youtube.com/watch?v=rJcJ7jzQO0g
+//https://www.youtube.com/watch?v=MOOHr47yve0&t=31s
