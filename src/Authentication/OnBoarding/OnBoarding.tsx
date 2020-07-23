@@ -3,15 +3,19 @@ import {
     View,
     StyleSheet,
     Dimensions,
+    Image
 } from 'react-native';
 
 import { interpolateColor, useScrollHandler } from 'react-native-redash'
-import Animated, { divide, multiply } from 'react-native-reanimated';
+import Animated, { divide, Extrapolate, interpolate, multiply } from 'react-native-reanimated';
 
 
-import Slide, { SLIDE_HEIGHT, BORDER_RADIUS } from './Slide';
+import Slide, { SLIDE_HEIGHT } from './Slide';
 import SubSlide from './SubSlide';
 import Dot from './Dot';
+
+import { theme } from '../../components';
+import { Routes, StackNavigationProps } from 'src/components/Navigation';
 
 
 
@@ -23,32 +27,48 @@ const slides = [
         subtitle: "Find Your Outfits",
         description: "Confused about your outfit? Don't worry! Find the best outfit here!",
         color: "#BFEAF5",
-        picture: require('../../assets/img/slide_1.png')
+        picture: {
+            src: require('../../assets/img/peoples/slide_1.png'),
+            width: 653,
+            height: 772
+        }
     },
     {
         title: "Playful",
         subtitle: "Hear it First, Wear it First",
         description: "Hating the clothes in your wardrobe? Explorer hundreds of outfit ideas!",
         color: "#BEECC4",
-        picture: require('../../assets/img/slide_2.png')
+        picture: {
+            src: require('../../assets/img/peoples/slide_2.png'),
+            width: 653,
+            height: 772
+        }
     },
     {
         title: "Excentric",
         subtitle: "Your Style, Your Way",
         description: "Create your individual & unique style and look amazing everyday",
         color: "#FFE4D9",
-        picture: require('../../assets/img/slide_3.png')
+        picture: {
+            src: require('../../assets/img/peoples/slide_3.png'),
+            width: 653,
+            height: 772
+        }
     },
     {
         title: "Funky",
         subtitle: "Look Good, Feel Good",
         description: "Discover the latest trends in fashion and explore your personality.",
         color: "#FFDDDD",
-        picture: require('../../assets/img/slide_4.png')
+        picture: {
+            src: require('../../assets/img/peoples/slide_4.png'),
+            width: 653,
+            height: 772
+        }
     },
 ]
 
-const OnBoarding = () => {
+const OnBoarding = ({ navigation }: StackNavigationProps<Routes, 'OnBoarding'>) => {
 
     const scroll = useRef<Animated.ScrollView>(null);
 
@@ -66,6 +86,27 @@ const OnBoarding = () => {
         <>
             <View style={styles.container}>
                 <Animated.View style={[styles.slider, { backgroundColor }]}>
+                    {slides.map(({ picture }, index) => {
+                        const opacity = interpolate(x, {
+                            inputRange: [
+                                (index - 0.5) * width,
+                                index * width,
+                                (index + 0.5) * width,
+                            ],
+                            outputRange: [0, 1, 0],
+                            extrapolate: Extrapolate.CLAMP,
+                        })
+                        return (
+                            <Animated.View style={[styles.underlay, { opacity }]} key={index} >
+                                <Image source={picture.src} style={{
+                                    width: width - theme.borderRadii.xl,
+                                    height: ((width - theme.borderRadii.xl)
+                                        * picture.height) / picture.width
+                                }} />
+                            </Animated.View>
+                        )
+                    })}
+
                     <Animated.ScrollView
                         ref={scroll}
                         horizontal
@@ -95,17 +136,24 @@ const OnBoarding = () => {
                                 { translateX: multiply(x, -1) },
                             ]
                         }}>
-                            {slides.map(({ subtitle, description }, index) => (
-                                <SubSlide
-                                    onPress={() => {
-                                        if (scroll.current) {
-                                            scroll.current.getNode().scrollTo({ x: width * (index + 1), animated: true })
-                                        }
-                                    }}
-                                    key={index}
-                                    last={index === slides.length - 1}
-                                    {...{ subtitle, description, x }} />
-                            ))}
+                            {slides.map(({ subtitle, description }, index) => {
+
+                                const last = index === slides.length - 1;
+
+                                return (
+                                    <SubSlide
+                                        onPress={() => {
+                                            if (last) {
+                                                navigation.navigate('Welcome');
+                                            }
+                                            else {
+                                                scroll.current?.getNode().scrollTo({ x: width * (index + 1), animated: true })
+                                            }
+                                        }}
+                                        key={index}
+                                        {...{ subtitle, description, x, last }} />
+                                )
+                            })}
                         </Animated.View>
                     </Animated.View>
                 </View>
@@ -121,7 +169,7 @@ const styles = StyleSheet.create({
     },
     slider: {
         height: SLIDE_HEIGHT,
-        borderBottomRightRadius: BORDER_RADIUS,
+        borderBottomRightRadius: theme.borderRadii.xl,
     },
     footer: {
         flex: 1,
@@ -129,16 +177,23 @@ const styles = StyleSheet.create({
     footerContent: {
         flex: 1,
         backgroundColor: 'white',
-        borderTopLeftRadius: BORDER_RADIUS,
+        borderTopLeftRadius: theme.borderRadii.xl,
     },
     pagination: {
         ...StyleSheet.absoluteFillObject,
-        height: BORDER_RADIUS,
+        height: theme.borderRadii.xl,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
     },
 
+    underlay: {
+        ...StyleSheet.absoluteFillObject,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        borderTopLeftRadius: theme.borderRadii.xl,
+        overflow: 'hidden',
+    },
 });
 
 export default OnBoarding;

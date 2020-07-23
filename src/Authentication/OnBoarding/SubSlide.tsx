@@ -18,8 +18,12 @@ const SubSlide = ({ subtitle, description, last, onPress }: SubSlideProps) => {
     return (
         <>
             <View style={styles.container}>
-                <Text variant='title2' style={styles.subTitle}>{subtitle}</Text>
-                <Text variant='body' style={styles.description}>{description}</Text>
+                <Text variant='title2' style={styles.subTitle}>
+                    {subtitle}
+                </Text>
+                <Text variant='body' style={styles.description}>
+                    {description}
+                </Text>
                 <Button
                     label={last ? "Let's get started!" : "Next"}
                     variant={last ? "primary" : "default"}
