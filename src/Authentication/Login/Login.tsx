@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 IconFA.loadFont();
 
-import { Routes, StackNavigationProps } from '../../components/Navigation';
+//import { Routes, StackNavigationProps } from '../../components/Navigation';
 import { Button, Container, Text, Box } from '../../components';
 import SocialLogin from '../../components/SocialLogin';
 import InputText from '../../components/Forms/InputText';
@@ -44,7 +44,7 @@ const footer = (
 );
 
 
-const Login = ({ navigation }: StackNavigationProps<Routes, 'Login'>) => {
+const Login = (/*{ navigation }: StackNavigationProps<Routes, 'Login'>*/) => {
     return (
         <Container footer={footer}>
             <Box padding='xl'>

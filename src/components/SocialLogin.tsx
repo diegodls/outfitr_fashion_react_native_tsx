@@ -1,25 +1,26 @@
 import React, { ReactNode } from 'react';
-import {
-    StyleSheet,
-    Image
-} from 'react-native';
-import theme, { Box, Text } from './Theme';
+import { Image } from 'react-native';
+import { Box, useTheme, makeStyles, Theme } from './Theme';
 
 const Google = require('../assets/img/social_logos/Google.png');
 const Facebook = require('../assets/img/social_logos/Facebook.png');
 const Apple = require('../assets/img/social_logos/Apple.png');
-const SIZE = theme.borderRadii.l * 2;
+
 
 interface SocialIconProps {
     children: ReactNode;
 }
 
 const SocialIcon = ({ children }: SocialIconProps) => {
+    const theme = useTheme();
+    const SIZE = theme.borderRadii.l * 2;
+
     return (
+
         <Box backgroundColor='white'
             width={SIZE}
             height={SIZE}
-            borderRadius='l'          
+            borderRadius='l'
             marginHorizontal='s'
             justifyContent='center'
             alignItems='center' >
@@ -30,10 +31,12 @@ const SocialIcon = ({ children }: SocialIconProps) => {
 
 const SocialLogin = () => {
 
+    const styles = useStyles();
+
     return (
         <Box
             flexDirection='row'
-            justifyContent='center'            
+            justifyContent='center'
         >
             <SocialIcon>
                 <Image source={Google} style={styles.image} />
@@ -43,18 +46,18 @@ const SocialLogin = () => {
             </SocialIcon>
             <SocialIcon>
                 <Image source={Apple} style={styles.image} />
-            </SocialIcon>            
+            </SocialIcon>
         </Box >
     );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme: Theme) => ({
     image: {
         flex: 1,
-        width: SIZE / 2,
-        height: SIZE / 2,
-        resizeMode: 'contain',        
-    },
-});
+        width: theme.borderRadii.l / 2,
+        height: theme.borderRadii.l / 2,
+        resizeMode: 'contain',
+    }
+}));
 
 export default SocialLogin;

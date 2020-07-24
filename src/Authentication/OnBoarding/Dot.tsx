@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-    View,
     StyleSheet,
-    Text
 } from 'react-native';
 import Animated, { Extrapolate, interpolate } from 'react-native-reanimated';
 
@@ -11,7 +9,7 @@ interface DotProps {
     currentIndex: Animated.Node<number>;
 }
 
-const Dot = ({ index, currentIndex }) => {
+const Dot = ({ index, currentIndex }: DotProps) => {
     const opacity = interpolate(currentIndex, {
         inputRange: [index - 1, index, index + 1],
         outputRange: [0.5, 1, 0.5],
@@ -31,7 +29,7 @@ const Dot = ({ index, currentIndex }) => {
             borderRadius: 4,
             margin: 4,
             opacity,
-            transform: [{scale}]
+            transform: [{ scale }]
         }]}>
 
         </Animated.View>

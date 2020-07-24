@@ -1,12 +1,11 @@
 import React from 'react';
 import {
-    View,
-    StyleSheet,
-    Image, Dimensions
+    Image,
+    Dimensions
 } from 'react-native';
 import { Routes, StackNavigationProps } from '../../components/Navigation';
 import { Button } from '../../components';
-import theme, { Box, Text } from '../../components/Theme';
+import { Box, Text, useTheme } from '../../components/Theme';
 
 const picture = {
     src: require('../../assets/img/peoples/slide_4.png'),
@@ -16,9 +15,8 @@ const picture = {
 
 const { width } = Dimensions.get('window');
 
-interface WelcomeProps { };
-
 const Welcome = ({ navigation }: StackNavigationProps<Routes, 'Welcome'>) => {
+    const theme = useTheme();
     return (
         <Box
             flex={1}
@@ -73,14 +71,4 @@ const Welcome = ({ navigation }: StackNavigationProps<Routes, 'Welcome'>) => {
 
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F0C',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
-
 export default Welcome;

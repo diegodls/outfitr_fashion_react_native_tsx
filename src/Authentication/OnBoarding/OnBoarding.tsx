@@ -14,8 +14,9 @@ import Slide, { SLIDE_HEIGHT } from './Slide';
 import SubSlide from './SubSlide';
 import Dot from './Dot';
 
-import { theme } from '../../components';
+import { useTheme, makeStyles } from '../../components';
 import { Routes, StackNavigationProps } from 'src/components/Navigation';
+import { Theme } from 'src/components/Theme';
 
 
 
@@ -69,6 +70,8 @@ const slides = [
 ]
 
 const OnBoarding = ({ navigation }: StackNavigationProps<Routes, 'OnBoarding'>) => {
+    const theme = useTheme();
+    const styles = useStyles();    
 
     const scroll = useRef<Animated.ScrollView>(null);
 
@@ -162,7 +165,7 @@ const OnBoarding = ({ navigation }: StackNavigationProps<Routes, 'OnBoarding'>) 
     );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles((theme: Theme) => ({
     container: {
         flex: 1,
         backgroundColor: 'white',
@@ -194,6 +197,6 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: theme.borderRadii.xl,
         overflow: 'hidden',
     },
-});
+}));
 
 export default OnBoarding;
