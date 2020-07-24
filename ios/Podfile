@@ -8,6 +8,9 @@ target 'outfitr_fashion_react_native_tsx' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+
   target 'outfitr_fashion_react_native_tsxTests' do
     inherit! :complete
     # Pods for testing
